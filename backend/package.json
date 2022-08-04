@@ -2,10 +2,10 @@
   "name": "scraper",
   "version": "1.0.0",
   "description": "",
-  "main": "scraper.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon scraper.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
