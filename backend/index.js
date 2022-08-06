@@ -154,6 +154,33 @@ const zooPlusProduct = (producUrl) => {
   });
 };
 
+const online4BabyProduct = (producUrl) => {
+  axios(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+
+    $(`div[data-page-id="product"]`, html).each(function () {
+      const title = $(this)
+        .find(`.text-darkblue.font-bold.text-lg.pb-2`)
+        .text();
+      // const title;
+      // const itemId;
+      // const options;
+
+      scrapedProduct.push({
+        title,
+      });
+    });
+    console.log("scrapedBabyProduct", scrapedProduct);
+  });
+};
+
+online4BabyProduct(
+  "https://www.online4baby.com/graco-swiftfold-highchair-suits-me-grey"
+);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
