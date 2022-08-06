@@ -1,6 +1,6 @@
 import axios from "axios";
 import { load } from "cheerio";
-import express, { response } from "express";
+import express from "express";
 const PORT = 9009;
 
 // Init app
@@ -110,6 +110,47 @@ const costcoProduct = async (producUrl) => {
       });
     });
     console.log("scrapedCostcoProduct", scrapedProduct);
+  });
+};
+
+const zooPlusProduct = (producUrl) => {
+  axios.get(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+    $(".FixedGrid_grid__cFmBX", html).each(function () {
+      const title = $(this).find(".z-h1").text();
+      $(".product__offer", html).each(function () {
+        const itemId = Number(
+          $(this).find(".Variant_variantDescription__YbooU > div").text()
+        );
+        const itemOptionText = $(this)
+          .find(".Variant_variantDescription__YbooU > span")
+          .text();
+        const itemOptionPrice = Number(
+          $(this)
+            .find(".z-price__amount")
+            .text()
+            .replace(/[^0-9\.-]+/g, "")
+        );
+        itemOptionsList.push({
+          itemId,
+          itemOptionText,
+          itemOptionPrice,
+        });
+      });
+
+      scrapedProduct.push({
+        price: null,
+        title,
+        itemOptionsList,
+      });
+    });
+    console.log(
+      "scrapedZooPlusProduct",
+      JSON.stringify(scrapedProduct, null, 4)
+    );
   });
 };
 
