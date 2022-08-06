@@ -154,6 +154,39 @@ const zooPlusProduct = (producUrl) => {
   });
 };
 
+const online4BabyProduct = (producUrl) => {
+  axios(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+
+    $(`div[data-page-id="product"]`, html).each(function () {
+      const title = $(this)
+        .find(`.text-darkblue.font-bold.text-lg.pb-2`)
+        .text();
+      const price = Number(
+        $(this)
+          .find(`.price`)
+          .text()
+          .replace(/[^0-9\.-]+/g, "")
+      );
+      const itemId = $(this)
+        .find(`.text-xs.text-darkblue.mb-3.item-main-id`)
+        .text();
+      const options = null;
+
+      scrapedProduct.push({
+        title,
+        price,
+        itemId,
+        options,
+      });
+    });
+    console.log("scrapedBabyProduct", scrapedProduct);
+  });
+};
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
