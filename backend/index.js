@@ -254,18 +254,58 @@ const activityToysProduct = (producUrl) => {
   });
 };
 
-activityToysProduct(
-  "https://www.activitytoysdirect.com/step2-up-and-down-roller-coaster-p45/"
-);
-activityToysProduct(
-  "https://www.activitytoysdirect.com/step2-unicorn-adventure-coaster-p1983/"
-);
-activityToysProduct(
-  "https://www.activitytoysdirect.com/step2-paw-patrol-adventure-coaster-p2074/"
-);
-activityToysProduct(
-  "https://www.activitytoysdirect.com/step2-rapid-ride-and-hide-roller-coaster-p2094/"
-);
+const dunelmProduct = (producUrl) => {
+  axios(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+
+    $(`#main-content`, html).each(function () {
+      const title = $(this)
+        .find(`h1[data-testid="product-title"]`)
+        .text()
+        .trim();
+      const price = Number(
+        $(this)
+          .find(`h2[data-testid="product-price-now"]`)
+          .first()
+          .text()
+          .replace(/[^0-9\.-]+/g, "")
+      );
+
+      const itemId = Number(
+        $(this).find(`table.spec-table > tbody > tr > td`).last().text()
+      );
+      $(`option[value]`).each(function () {
+        const itemOptionText = $(this).text().split("-")[0].trim();
+        const itemOptionPrice = Number(
+          $(this)
+            .text()
+            .split("-")[1]
+            .replace(/[^0-9\.-]+/g, "")
+            .trim()
+        );
+        if (itemOptionPrice != 0)
+          itemOptionsList.push({
+            itemOptionText,
+            itemOptionPrice,
+          });
+      });
+
+      scrapedProduct.push({
+        title,
+        price: price != NaN ? price : "",
+        itemId,
+        itemOptionsList,
+      });
+    });
+    console.log(
+      "scrapedDunelmProduct",
+      JSON.stringify(scrapedProduct, null, 6)
+    );
+  });
+};
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
