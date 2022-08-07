@@ -221,13 +221,50 @@ const vonhausProduct = (producUrl) => {
   });
 };
 
-vonhausProduct("https://www.vonhaus.com/vh_en/american-style-bbq-grill");
-vonhausProduct("https://www.vonhaus.com/vh_en/oxford-display-cabinet");
-vonhausProduct(
-  "https://www.vonhaus.com/vh_en/ardwick-fluted-glass-3-door-sideboard"
+const activityToysProduct = (producUrl) => {
+  axios(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+
+    $(`#site_torso`, html).each(function () {
+      const title = $(this).find(`#prodpage_title > h1 > span`).text().trim();
+      const price = Number(
+        $(this)
+          .find(`span[class="price"]`)
+          .first()
+          .text()
+          .replace(/[^0-9\.-]+/g, "")
+      );
+
+      const itemId = Number(
+        $(this).find(`table.spec-table > tbody > tr > td`).last().text()
+      );
+      const options = null;
+
+      scrapedProduct.push({
+        title,
+        price,
+        itemId,
+        options,
+      });
+    });
+    console.log("scrapedActivityProduct", scrapedProduct);
+  });
+};
+
+activityToysProduct(
+  "https://www.activitytoysdirect.com/step2-up-and-down-roller-coaster-p45/"
 );
-vonhausProduct(
-  "https://www.vonhaus.com/vh_en/ardwick-fluted-glass-2-door-cabinet"
+activityToysProduct(
+  "https://www.activitytoysdirect.com/step2-unicorn-adventure-coaster-p1983/"
+);
+activityToysProduct(
+  "https://www.activitytoysdirect.com/step2-paw-patrol-adventure-coaster-p2074/"
+);
+activityToysProduct(
+  "https://www.activitytoysdirect.com/step2-rapid-ride-and-hide-roller-coaster-p2094/"
 );
 
 app.listen(PORT, () => {
