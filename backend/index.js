@@ -47,14 +47,14 @@ const ebayProduct = async (producUrl) => {
     const scrapedProduct = [];
     const itemOptionsList = [];
 
-    $("#CenterPanelInternal", html).each(function () {
-      const title = $(this).find(".x-item-title").text().trim();
-      const price = $(this).find("#prcIsum").attr("content");
+    $(`#CenterPanelInternal`, html).each(function () {
+      const title = $(this).find(`.x-item-title`).text().trim();
+      const price = $(this).find(`#prcIsum`).attr(`content`);
       $(".vi-vpqp-pills", html).each(function () {
-        const itemOptionText = $(this).find(".vi-vpqp-text").first().text();
+        const itemOptionText = $(this).find(`.vi-vpqp-text`).first().text();
         const itemOptionPrice = Number(
           $(this)
-            .find(".vi-vpqp-price")
+            .find(`.vi-vpqp-price`)
             .text()
             .replace(/[^0-9\.-]+/g, "")
         );
@@ -63,8 +63,8 @@ const ebayProduct = async (producUrl) => {
           itemOptionPrice,
         });
       });
-      $("#viTabs", html).each(function () {
-        const itemId = Number($(this).find("#descItemNumber").text());
+      $(`#viTabs`, html).each(function () {
+        const itemId = Number($(this).find(`#descItemNumber`).text());
         scrapedProduct.push({
           title,
           price,
