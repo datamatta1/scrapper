@@ -83,7 +83,7 @@ const costcoProduct = async (producUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
 
-    $(".product-page-container", html).each(function () {
+    $(`.product-page-container`, html).each(function () {
       const title = $(this).find(`h1.product-name`).text();
       const singlePrice = Number(
         $(this)
