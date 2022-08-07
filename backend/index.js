@@ -187,6 +187,49 @@ const online4BabyProduct = (producUrl) => {
   });
 };
 
+const vonhausProduct = (producUrl) => {
+  axios(producUrl).then((response) => {
+    const html = response.data;
+    const $ = load(html);
+    const scrapedProduct = [];
+    const itemOptionsList = [];
+
+    $(`#maincontent`, html).each(function () {
+      const title = $(this).find(`.page-title`).text().trim();
+      const price = Number(
+        $(this)
+          .find(`span[class="price"]`)
+          .first()
+          .text()
+          .replace(/[^0-9\.-]+/g, "")
+      );
+      // .replace(/[^0-9\.-]+/g, "")
+
+      const itemId = Number(
+        $(this).find(`.product-specs__value`).last().text()
+      );
+      const options = null;
+
+      scrapedProduct.push({
+        title,
+        price,
+        itemId,
+        options,
+      });
+    });
+    console.log("scrapedVonhausProduct", scrapedProduct);
+  });
+};
+
+vonhausProduct("https://www.vonhaus.com/vh_en/american-style-bbq-grill");
+vonhausProduct("https://www.vonhaus.com/vh_en/oxford-display-cabinet");
+vonhausProduct(
+  "https://www.vonhaus.com/vh_en/ardwick-fluted-glass-3-door-sideboard"
+);
+vonhausProduct(
+  "https://www.vonhaus.com/vh_en/ardwick-fluted-glass-2-door-cabinet"
+);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
