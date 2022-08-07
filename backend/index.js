@@ -18,17 +18,17 @@ const amazonProduct = async (productUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
 
-    $("#a-page", html).each(function () {
-      const title = $(this).find("#productTitle").text().trim();
+    $(`#a-page`, html).each(function () {
+      const title = $(this).find(`#productTitle`).text().trim();
       const price = Number(
         $(this)
-          .find(".a-offscreen")
+          .find(`.a-offscreen`)
           .first()
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
-      const options = $(this).find(".po-color").text().trim();
-      const image = $(this).find("#imgTagWrapperId > img").attr("src");
+      const options = $(this).find(`.po-color`).text().trim();
+      const image = $(this).find(`#imgTagWrapperId > img`).attr(`src`);
       scrapedProduct.push({
         title,
         price,
