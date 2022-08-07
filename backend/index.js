@@ -119,18 +119,18 @@ const zooPlusProduct = (producUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
     const itemOptionsList = [];
-    $(".FixedGrid_grid__cFmBX", html).each(function () {
-      const title = $(this).find(".z-h1").text();
-      $(".product__offer", html).each(function () {
+    $(`.FixedGrid_grid__cFmBX`, html).each(function () {
+      const title = $(this).find(`.z-h1`).text();
+      $(`.product__offer`, html).each(function () {
         const itemId = Number(
-          $(this).find(".Variant_variantDescription__YbooU > div").text()
+          $(this).find(`.Variant_variantDescription__YbooU > div`).text()
         );
         const itemOptionText = $(this)
-          .find(".Variant_variantDescription__YbooU > span")
+          .find(`.Variant_variantDescription__YbooU > span`)
           .text();
         const itemOptionPrice = Number(
           $(this)
-            .find(".z-price__amount")
+            .find(`.z-price__amount`)
             .text()
             .replace(/[^0-9\.-]+/g, "")
         );
