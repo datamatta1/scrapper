@@ -18,17 +18,17 @@ const amazonProduct = async (productUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
 
-    $("#a-page", html).each(function () {
-      const title = $(this).find("#productTitle").text().trim();
+    $(`#a-page`, html).each(function () {
+      const title = $(this).find(`#productTitle`).text().trim();
       const price = Number(
         $(this)
-          .find(".a-offscreen")
+          .find(`.a-offscreen`)
           .first()
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
-      const options = $(this).find(".po-color").text().trim();
-      const image = $(this).find("#imgTagWrapperId > img").attr("src");
+      const options = $(this).find(`.po-color`).text().trim();
+      const image = $(this).find(`#imgTagWrapperId > img`).attr(`src`);
       scrapedProduct.push({
         title,
         price,
@@ -47,14 +47,14 @@ const ebayProduct = async (producUrl) => {
     const scrapedProduct = [];
     const itemOptionsList = [];
 
-    $("#CenterPanelInternal", html).each(function () {
-      const title = $(this).find(".x-item-title").text().trim();
-      const price = $(this).find("#prcIsum").attr("content");
+    $(`#CenterPanelInternal`, html).each(function () {
+      const title = $(this).find(`.x-item-title`).text().trim();
+      const price = $(this).find(`#prcIsum`).attr(`content`);
       $(".vi-vpqp-pills", html).each(function () {
-        const itemOptionText = $(this).find(".vi-vpqp-text").first().text();
+        const itemOptionText = $(this).find(`.vi-vpqp-text`).first().text();
         const itemOptionPrice = Number(
           $(this)
-            .find(".vi-vpqp-price")
+            .find(`.vi-vpqp-price`)
             .text()
             .replace(/[^0-9\.-]+/g, "")
         );
@@ -63,8 +63,8 @@ const ebayProduct = async (producUrl) => {
           itemOptionPrice,
         });
       });
-      $("#viTabs", html).each(function () {
-        const itemId = Number($(this).find("#descItemNumber").text());
+      $(`#viTabs`, html).each(function () {
+        const itemId = Number($(this).find(`#descItemNumber`).text());
         scrapedProduct.push({
           title,
           price,
@@ -83,23 +83,23 @@ const costcoProduct = async (producUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
 
-    $(".product-page-container", html).each(function () {
-      const title = $(this).find("h1.product-name").text();
+    $(`.product-page-container`, html).each(function () {
+      const title = $(this).find(`h1.product-name`).text();
       const singlePrice = Number(
         $(this)
-          .find(".product-price-amount")
+          .find(`.product-price-amount`)
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
       const yourPrice = Number(
         $(this)
-          .find(".you-pay-value")
+          .find(`.you-pay-value`)
           .first()
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
       const itemId = Number(
-        $(this).find(".product-code > .notranslate").text()
+        $(this).find(`.product-code > .notranslate`).text()
       );
 
       scrapedProduct.push({
@@ -119,18 +119,18 @@ const zooPlusProduct = (producUrl) => {
     const $ = load(html);
     const scrapedProduct = [];
     const itemOptionsList = [];
-    $(".FixedGrid_grid__cFmBX", html).each(function () {
-      const title = $(this).find(".z-h1").text();
-      $(".product__offer", html).each(function () {
+    $(`.FixedGrid_grid__cFmBX`, html).each(function () {
+      const title = $(this).find(`.z-h1`).text();
+      $(`.product__offer`, html).each(function () {
         const itemId = Number(
-          $(this).find(".Variant_variantDescription__YbooU > div").text()
+          $(this).find(`.Variant_variantDescription__YbooU > div`).text()
         );
         const itemOptionText = $(this)
-          .find(".Variant_variantDescription__YbooU > span")
+          .find(`.Variant_variantDescription__YbooU > span`)
           .text();
         const itemOptionPrice = Number(
           $(this)
-            .find(".z-price__amount")
+            .find(`.z-price__amount`)
             .text()
             .replace(/[^0-9\.-]+/g, "")
         );
