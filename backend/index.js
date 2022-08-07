@@ -84,22 +84,22 @@ const costcoProduct = async (producUrl) => {
     const scrapedProduct = [];
 
     $(".product-page-container", html).each(function () {
-      const title = $(this).find("h1.product-name").text();
+      const title = $(this).find(`h1.product-name`).text();
       const singlePrice = Number(
         $(this)
-          .find(".product-price-amount")
+          .find(`.product-price-amount`)
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
       const yourPrice = Number(
         $(this)
-          .find(".you-pay-value")
+          .find(`.you-pay-value`)
           .first()
           .text()
           .replace(/[^0-9\.-]+/g, "")
       );
       const itemId = Number(
-        $(this).find(".product-code > .notranslate").text()
+        $(this).find(`.product-code > .notranslate`).text()
       );
 
       scrapedProduct.push({
